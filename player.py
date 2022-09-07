@@ -88,10 +88,12 @@ class mpg321_Player(Player):
 if __name__ == "__main__":
     from time import sleep
 
-    track_name = '/usr/share/sounds/alsa/Front_Center.wav'
+    long_track = '/home/share/Music/周杰伦-花海.mp3'
+    short_track = '/usr/share/sounds/alsa/Front_Center.wav'
+
     player = mpg321_Player()
     player.run()
-    player.play(track_name)
+    player.play(long_track)
     sleep(2)
     player.pause()
     sleep(1)
