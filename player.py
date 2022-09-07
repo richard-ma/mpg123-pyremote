@@ -86,10 +86,15 @@ class mpg321_Player(Player):
 
 
 if __name__ == "__main__":
+    import os
     from time import sleep
 
-    long_track = '/home/share/Music/周杰伦-花海.mp3'
-    short_track = '/usr/share/sounds/alsa/Front_Center.wav'
+    working_dir = os.getcwd()
+
+    long_track = os.path.join(working_dir, 'data', 'jay_huahai.mp3')
+    short_track = os.path.join(working_dir, 'data', 'Front_Center.wav')
+    print(long_track)
+    print(short_track)
 
     player = mpg321_Player()
     player.run()
