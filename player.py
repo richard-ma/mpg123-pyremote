@@ -24,7 +24,7 @@ class Player(ABC):
         pass
 
 
-class mpg123_Player(Player):
+class mpg321_Player(Player):
     def __init__(self):
         self.p = None
         self._volume = 50  # 50% volume
@@ -39,7 +39,7 @@ class mpg123_Player(Player):
             raise Exception("{0}: {1}".format(type(err).__name__, err))
 
     def run(self):
-        self.p = subprocess.Popen(['/usr/bin/mpg123', '-R'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, shell=False)
+        self.p = subprocess.Popen(['/usr/bin/mpg321', '-R', 'placeholder'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, shell=False)
         print("Start Player")
 
     def play(self, track_name):
@@ -61,17 +61,18 @@ class mpg123_Player(Player):
     def mute(self, mute=True):
         if self.p is not None:
             if mute:
-                self.__write('MUTE')
+                self.volume(0)
             else:
-                self.__write('UNMUTE')
+                self.volume(self._volume)
 
     def volume(self, percent):
         if self.p is not None:
-            self.__write(f'VOLUME {percent}'.format(percent=percent))
+            self._volume = percent
+            self.__write(f'GAIN {percent}'.format(percent=percent))
 
 
 if __name__ == "__main__":
     track_name = '/home/share/Music/周杰伦-听见下雨的声音.mp3'
-    player = mpg123_Player()
+    player = mpg321_Player()
     player.run()
     player.play(track_name)
