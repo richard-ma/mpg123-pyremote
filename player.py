@@ -86,7 +86,13 @@ class mpg321_Player(Player):
 
 
 if __name__ == "__main__":
+    from time import sleep
+
     track_name = '/usr/share/sounds/alsa/Front_Center.wav'
     player = mpg321_Player()
     player.run()
     player.play(track_name)
+    sleep(2)
+    player.pause()
+    sleep(1)
+    player.pause()
