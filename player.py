@@ -39,7 +39,7 @@ class mpg123_Player(Player):
             raise Exception("{0}: {1}".format(type(err).__name__, err))
 
     def run(self):
-        self.p = subprocess.Popen(['mpg123', '-R'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, shell=False)
+        self.p = subprocess.Popen(['/usr/bin/mpg123', '-R'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, shell=False)
         print("Start Player")
 
     def play(self, track_name):
