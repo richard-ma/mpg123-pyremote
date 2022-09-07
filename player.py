@@ -90,4 +90,3 @@ if __name__ == "__main__":
     player = mpg321_Player()
     player.run()
     player.play(track_name)
-    player.quit()
