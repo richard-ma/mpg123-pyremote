@@ -86,7 +86,7 @@ class mpg321_Player(Player):
 
 
 if __name__ == "__main__":
-    track_name = '/home/share/Music/周杰伦-听见下雨的声音.mp3'
+    track_name = '/usr/share/sounds/alsa/Front_Center.wav'
     player = mpg321_Player()
     player.run()
     player.play(track_name)
