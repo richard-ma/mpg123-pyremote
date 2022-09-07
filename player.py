@@ -110,3 +110,4 @@ if __name__ == "__main__":
         player.volume(i * 10)
     sleep(5)
     player.stop()
+    player.quit()
