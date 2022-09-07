@@ -102,3 +102,11 @@ if __name__ == "__main__":
     player.pause()
     sleep(1)
     player.pause()
+    for i in range(10+1):
+        sleep(1)
+        player.volume(100-i*10)
+    for i in range(10+1):
+        sleep(1)
+        player.volume(i * 10)
+    sleep(5)
+    player.stop()
