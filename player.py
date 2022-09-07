@@ -27,7 +27,7 @@ class Player(ABC):
 class mpg321_Player(Player):
     def __init__(self):
         self.p = None
-        self._volume = 50  # 50% volume
+        self._volume = 100  # 0% ~ 100%
 
     def __write(self, cmd):
         cmd += '\n'
@@ -66,14 +66,17 @@ class mpg321_Player(Player):
     def mute(self, mute=True):
         if self.p is not None:
             if mute:
-                self.volume(0)
+                self.__volume(0)
             else:
-                self.volume(self._volume)
+                self.__volume(self._volume)
+
+    def __volume(self, percent):
+        if self.p is not None:
+            self.__write(f'GAIN {percent}'.format(percent=percent))
 
     def volume(self, percent):
-        if self.p is not None:
-            self._volume = percent
-            self.__write(f'GAIN {percent}'.format(percent=percent))
+        self._volume = percent
+        self.__volume(percent)
 
     def quit(self):
         if self.p is not None:
