@@ -75,9 +75,15 @@ class mpg321_Player(Player):
             self._volume = percent
             self.__write(f'GAIN {percent}'.format(percent=percent))
 
+    def quit(self):
+        if self.p is not None:
+            self.__write('QUIT')
+        self.p = None
+
 
 if __name__ == "__main__":
     track_name = '/home/share/Music/周杰伦-听见下雨的声音.mp3'
     player = mpg321_Player()
     player.run()
     player.play(track_name)
+    player.quit()
