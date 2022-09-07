@@ -35,6 +35,7 @@ class mpg321_Player(Player):
         try:
             self.p.stdin.write(cmd.encode())
             self.p.stdin.flush()
+            self.p.communicate()
         except Exception as err:
             raise Exception("{0}: {1}".format(type(err).__name__, err))
 
