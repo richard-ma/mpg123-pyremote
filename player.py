@@ -16,7 +16,7 @@ class Player(ABC):
         pass
 
     @abstractmethod
-    def mute(self, op=True):
+    def mute(self, mute=True):
         pass
 
     @abstractmethod
@@ -30,15 +30,14 @@ class mpg321_Player(Player):
         self.status = None  # 0 - stopped, 1 - pause, 2 - start playing, 3 - ended
         self._volume = 100  # 0% ~ 100%
 
-    def __read(self):
+    def __read_last_line(self):
         last_line = None
         if self.p is not None:
-            for line in iter(self.p.stdout.readline, b''):
-                last_line = line.decode('UTF-8').strip()
+            return self.p.stdout.readlines()[-1]
         return last_line
 
     def read(self):
-        return self.__read()
+        return self.__read_last_line()
 
     def __write(self, cmd):
         cmd += '\n'
