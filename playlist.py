@@ -30,9 +30,9 @@ class Playlist:
         return self._q.pop(idx)
 
     def __next_func_repeat(self):
-        if self._current_track_name != self._q[0]:
-            self._q.insert(0, self._current_track_name)
-        return self._q[0]
+        if self._current_track_name is None:
+            self._current_track_name = self._q[0]
+        return self._current_track_name
 
     def next_track(self):
         if self.length > 0:
