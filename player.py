@@ -31,11 +31,11 @@ class mpg321_Player(Player):
         self._volume = 100  # 0% ~ 100%
 
     def __read(self):
+        last_line = None
         if self.p is not None:
-            for line in self.p.stdout.readline():
-                print(line)
-        else:
-            return None
+            for line in iter(self.p.stdout.readline, b''):
+                last_line = line.decode('UTF-8').strip()
+        return last_line
 
     def read(self):
         return self.__read()
@@ -109,6 +109,7 @@ if __name__ == "__main__":
     player = mpg321_Player()
     player.run()
     player.read()
+    player.quit()
     quit()
 
     player.play(long_track)
