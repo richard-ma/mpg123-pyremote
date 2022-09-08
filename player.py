@@ -27,7 +27,18 @@ class Player(ABC):
 class mpg321_Player(Player):
     def __init__(self):
         self.p = None
+        self.status = None  # 0 - stopped, 1 - pause, 2 - start playing, 3 - ended
         self._volume = 100  # 0% ~ 100%
+
+    def __read(self):
+        if self.p is not None:
+            for line in self.p.stdout.readline():
+                print(line)
+        else:
+            return None
+
+    def read(self):
+        return self.__read()
 
     def __write(self, cmd):
         cmd += '\n'
@@ -97,6 +108,9 @@ if __name__ == "__main__":
 
     player = mpg321_Player()
     player.run()
+    player.read()
+    quit()
+
     player.play(long_track)
     sleep(2)
     player.pause()
