@@ -3,6 +3,17 @@ import subprocess
 
 
 class Player(ABC):
+    @staticmethod
+    def factory(player_name):
+        d = {
+            'mpg321': mpg321_Player,
+        }
+
+        if player_name in d.keys():
+            return d[player_name]()
+        else:
+            raise Exception(f'No such player: {player_name}'.format(player_name=player_name))
+
     @abstractmethod
     def play(self, track_name):
         pass
