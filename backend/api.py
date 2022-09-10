@@ -30,8 +30,11 @@ class Track:
 class Player(Resource):
     # get track info
     def get(self, track_name):
-        t = Track(track_name)
-        return make_response(t)
+        print(track_name)
+        app.config['music_player'].play(track_name)
+
+        #t = Track(track_name)
+        #return make_response(t)
 
     # play track
     def post(self, track_name):
