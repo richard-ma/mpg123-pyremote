@@ -4,7 +4,7 @@ import player
 import os
 
 
-MUSIC_DIRECTORY = '/usr/share/Music'
+MUSIC_DIRECTORY = '/home/share/Music'
 
 
 app = Flask(__name__)
@@ -27,22 +27,20 @@ class Track:
         return os.path.join(MUSIC_DIRECTORY, self.track_name)
 
 
-class Player(Resource):
+class Play(Resource):
     # get track info
     def get(self, track_name):
-        print(track_name)
-        app.config['music_player'].play(track_name)
-
-        #t = Track(track_name)
-        #return make_response(t)
-
-    # play track
-    def post(self, track_name):
         t = Track(track_name)
-        return make_response(t)
+        player = app.config['music_player']
+        try:
+            player.play(t.full_path_name())
+
+            return make_response(t.full_path_name())
+        except Exception as e:
+            return make_response(err=e)
 
 
-api.add_resource(Player, '/player/<string:track_name>')
+api.add_resource(Play, '/play/<string:track_name>')
 
 if __name__ == "__main__":
     # Setup code
