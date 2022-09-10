@@ -23,7 +23,12 @@ class Track:
     def __init__(self, track_name):
         self.track_name = track_name
 
-    def full_path_name(self):
+    # for message
+    def get_track_name(self):
+        return self.track_name
+
+    # for player
+    def get_full_path_track_name(self):
         return os.path.join(MUSIC_DIRECTORY, self.track_name)
 
 
@@ -33,9 +38,9 @@ class Play(Resource):
         t = Track(track_name)
         player = app.config['music_player']
         try:
-            player.play(t.full_path_name())
+            player.play(t.get_full_path_track_name())
 
-            return make_response(t.full_path_name())
+            return make_response(t.get_track_name())
         except Exception as e:
             return make_response(err=e)
 

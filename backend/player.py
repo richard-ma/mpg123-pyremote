@@ -70,11 +70,14 @@ class mpg321_Player(Player):
 
     def play(self, track_name):
         print("Play: ", track_name)
+        if not os.path.exists(track_name):
+            raise Exception('Track not found')
+
         if self.p is not None:
             self.__write(f'LOAD {track_name}'.format(track_name=track_name))
             return True
         else:
-            return False
+            raise Exception('Player is None')
 
     def pause(self):
         if self.p is not None:
