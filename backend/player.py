@@ -44,11 +44,9 @@ class mpg321_Player(Player):
     def __read_last_line(self):
         last_line = None
         if self.p is not None:
-            return self.p.stdout.readlines()[-1]
+            for line in iter(self.p.stdout.readline, b''):
+                last_line = line.decode('UTF-8').strip()
         return last_line
-
-    def read(self):
-        return self.__read_last_line()
 
     def __write(self, cmd):
         cmd += '\n'
@@ -58,6 +56,11 @@ class mpg321_Player(Player):
             self.p.stdin.flush()
         except Exception as err:
             raise Exception("{0}: {1}".format(type(err).__name__, err))
+
+    @property
+    def is_playing(self):
+        status = self.__read_last_line()
+        print(status)
 
     def run(self):
         self.p = subprocess.Popen([
@@ -71,7 +74,7 @@ class mpg321_Player(Player):
     def play(self, track_name):
         print("Play: ", track_name)
         if not os.path.exists(track_name):
-            raise Exception('Track not found')
+            raise Exception('No such Track')
 
         if self.p is not None:
             self.__write(f'LOAD {track_name}'.format(track_name=track_name))
@@ -121,14 +124,12 @@ if __name__ == "__main__":
 
     player = mpg321_Player()
     player.run()
-    player.read()
-    player.quit()
-    quit()
 
     player.play(long_track)
     sleep(2)
     player.pause()
-    sleep(1)
+    print(player.is_playing)
+    sleep(3)
     player.pause()
     for i in range(10+1):
         sleep(1)
@@ -138,4 +139,5 @@ if __name__ == "__main__":
         player.volume(i * 10)
     sleep(5)
     player.stop()
+    print(player.is_playing)
     player.quit()

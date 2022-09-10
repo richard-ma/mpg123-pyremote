@@ -36,9 +36,10 @@ class Play(Resource):
     # get track info
     def get(self, track_name):
         t = Track(track_name)
-        player = app.config['music_player']
+        p = app.config['music_player']
+
         try:
-            player.play(t.get_full_path_track_name())
+            p.play(t.get_full_path_track_name())
 
             return make_response(t.get_track_name())
         except Exception as e:
