@@ -86,6 +86,11 @@ class mpg321_Player(Player):
 
     def __volume(self, percent):
         if self.p is not None:
+            if percent > 100:
+                percent = 100
+            elif percent < 0:
+                percent = 0
+
             self.__write(f'GAIN {percent}'.format(percent=percent))
 
     def volume(self, percent):
