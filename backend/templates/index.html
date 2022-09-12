@@ -5,13 +5,20 @@
     <title>Lan Player</title>
 </head>
 <body>
-    <form action="/play/周杰伦-花海" method="get">
-        <input type="text" value="周杰伦-花海" />
-        <input type="submit" value="播放" />
+    <form id="main_form" method="get">
+        <input id="track_name" type="text" value="周杰伦-花海" />
+        <input id="play_button" type="submit" value="播放" onclick="play_track();"/>
     </form>
     <a href="/pause">暂停</a>
     <a href="/stop">停止</a>
     <a href="/volume/100">最大音量</a>
     <a href="/volume/0">静音</a>
+    <script>
+        function play_track() {
+            form = document.getElementById('main_form');
+            form.action = '/play' + document.getElementById('track_name').value();
+            form.submit()
+        }
+    </script>
 </body>
 </html>
