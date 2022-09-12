@@ -38,15 +38,7 @@ class Player(ABC):
 class mpg321_Player(Player):
     def __init__(self):
         self.p = None
-        self.status = None  # 0 - stopped, 1 - pause, 2 - start playing, 3 - ended
         self._volume = 100  # 0% ~ 100%
-
-    def __read_last_line(self):
-        last_line = None
-        if self.p is not None:
-            for line in iter(self.p.stdout.readline, b''):
-                last_line = line.decode('UTF-8').strip()
-        return last_line
 
     def __write(self, cmd):
         cmd += '\n'
@@ -56,11 +48,6 @@ class mpg321_Player(Player):
             self.p.stdin.flush()
         except Exception as err:
             raise Exception("{0}: {1}".format(type(err).__name__, err))
-
-    @property
-    def is_playing(self):
-        status = self.__read_last_line()
-        print(status)
 
     def run(self):
         self.p = subprocess.Popen([
@@ -128,7 +115,6 @@ if __name__ == "__main__":
     player.play(long_track)
     sleep(2)
     player.pause()
-    print(player.is_playing)
     sleep(3)
     player.pause()
     for i in range(10+1):
@@ -139,5 +125,4 @@ if __name__ == "__main__":
         player.volume(i * 10)
     sleep(5)
     player.stop()
-    print(player.is_playing)
     player.quit()
