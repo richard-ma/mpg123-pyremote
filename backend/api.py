@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_restful import Resource, Api
 import player
 import os
@@ -17,6 +17,11 @@ def make_response(message=None, err=None):
         'message': message,
         'error': err,
     }
+
+
+@app.route('/')
+def index():
+    render_template('index.html')
 
 
 class Track:
