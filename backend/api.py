@@ -25,7 +25,7 @@ class Track:
 
     # for message
     def get_track_name(self):
-        return self.track_name
+        return os.path.basename(self.track_name).split('.')[0]
 
     # for player
     def get_full_path_track_name(self):
@@ -46,7 +46,46 @@ class Play(Resource):
             return make_response(err=e)
 
 
+class Stop(Resource):
+    def get(self):
+        p = app.config['music_player']
+
+        try:
+            p.stop()
+
+            return make_response(True)
+        except Exception as e:
+            return make_response(err=e)
+
+
+class Pause(Resource):
+    def get(self):
+        p = app.config['music_player']
+
+        try:
+            p.pause()
+
+            return make_response(True)
+        except Exception as e:
+            return make_response(err=e)
+
+
+class Volume(Resource):
+    def get(self, percent):
+        p = app.config['music_player']
+
+        try:
+            p.volume(percent)
+
+            return make_response(percent)
+        except Exception as e:
+            return make_response(err=e)
+
+
 api.add_resource(Play, '/play/<string:track_name>')
+api.add_resource(Stop, '/stop')
+api.add_resource(Pause, '/pause')
+api.add_resource(Play, '/volume/<int:percent>')
 
 if __name__ == "__main__":
     # Setup code
