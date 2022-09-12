@@ -85,7 +85,7 @@ class Volume(Resource):
 api.add_resource(Play, '/play/<string:track_name>')
 api.add_resource(Stop, '/stop')
 api.add_resource(Pause, '/pause')
-api.add_resource(Play, '/volume/<int:percent>')
+api.add_resource(Volume, '/volume/<int:percent>')
 
 if __name__ == "__main__":
     # Setup code
