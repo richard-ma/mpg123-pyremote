@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 import subprocess
+import os
 
 
 class Player(ABC):
@@ -104,7 +105,6 @@ class mpg321_Player(Player):
 
 
 if __name__ == "__main__":
-    import os
     from time import sleep
 
     working_dir = os.getcwd()
