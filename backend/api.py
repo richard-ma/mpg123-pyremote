@@ -21,15 +21,15 @@ def make_response(message=None, err=None):
 
 class Track:
     def __init__(self, track_name):
-        self.track_name = track_name
+        self._track_name = track_name
 
     # for message
     def get_track_name(self):
-        return os.path.basename(self.track_name).split('.')[0]
+        return self._track_name
 
     # for player
     def get_full_path_track_name(self):
-        return os.path.join(MUSIC_DIRECTORY, self.track_name)
+        return os.path.join(MUSIC_DIRECTORY, self._track_name + '.mp3')
 
 
 class Play(Resource):
@@ -41,7 +41,7 @@ class Play(Resource):
         try:
             p.play(t.get_full_path_track_name())
 
-            return make_response(t.get_track_name())
+            return make_response(track_name)
         except Exception as e:
             return make_response(err=e)
 
